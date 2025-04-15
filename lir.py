@@ -111,11 +111,21 @@ def lir(DesiredVariables, Path, OutputCoordinates={}, PredictorMeasurements={}, 
 
     pH_adjustment(
         DesiredVariables, 
-        EstDates)
+        EstDates, 
+        Cant,
+        Cant2002, 
+        Cant_adjusted, 
+        Estimate,
+        PredictorMeasurements,
+        OutputCoordinates,
+        C,
+        Uncertainties_pre,
+        DUncertainties_pre,
+        **kwargs)
 
      # Stopping the timer
     toc = time.perf_counter()
     print(f"PyESPER_LIR took {toc - tic:0.4f} seconds, or {(toc-tic)/60:0.4f} minutes to run")    
 
     # DEBUG 
-    print(Cant)
+#    print(Cant2002)

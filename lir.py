@@ -19,6 +19,7 @@ def lir(DesiredVariables, Path, OutputCoordinates={}, PredictorMeasurements={}, 
     from organize_data import organize_data
     from emlr_estimate import emlr_estimate
     from adjust_pH_DIC import adjust_pH_DIC
+    from pH_adjustment import pH_adjustment
 
     # Starting the timer
     tic = time.perf_counter() 
@@ -99,7 +100,7 @@ def lir(DesiredVariables, Path, OutputCoordinates={}, PredictorMeasurements={}, 
         dunc_combo_dict,
         Coefficients=CoefficientsUsed)
    
-    Cant_adjusted = adjust_pH_DIC(
+    Cant_adjusted, Cant, Cant2002 = adjust_pH_DIC(
         DesiredVariables,
         VerboseTF,
         EstDates,
@@ -108,9 +109,13 @@ def lir(DesiredVariables, Path, OutputCoordinates={}, PredictorMeasurements={}, 
         OutputCoordinates,
         **kwargs)
 
+    pH_adjustment(
+        DesiredVariables, 
+        EstDates)
+
      # Stopping the timer
     toc = time.perf_counter()
     print(f"PyESPER_LIR took {toc - tic:0.4f} seconds, or {(toc-tic)/60:0.4f} minutes to run")    
 
     # DEBUG 
-    print(Cant_adjusted)
+    print(Cant)

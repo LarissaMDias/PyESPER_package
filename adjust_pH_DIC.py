@@ -37,4 +37,4 @@ def adjust_pH_DIC(DesiredVariables, VerboseTF, Dates, Est_pre={}, PredictorMeasu
                 dic = list(a)
             Cant_adjusted[combo] = dic
 
-    return Cant_adjusted
+    return Cant_adjusted, Cant, Cant2002

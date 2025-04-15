@@ -110,10 +110,12 @@ def lir(DesiredVariables, Path, OutputCoordinates={}, PredictorMeasurements={}, 
         **kwargs)
 
     pH_adjustment(
+        Path,
         DesiredVariables, 
         EstDates, 
         Cant,
         Cant2002, 
+        PerKgSwTF,
         Cant_adjusted, 
         Estimate,
         PredictorMeasurements,

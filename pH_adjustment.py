@@ -26,6 +26,10 @@ def pH_adjustment(
     from temperature_define import temperature_define
     from iterations import iterations
     from fetch_data import fetch_data
+    from input_AAinds import input_AAinds
+    from coefs_AAinds import coefs_AAinds
+    from interpolate import interpolate
+    from organize_data import organize_data
 
     combos2 = list(Est_pre.keys())
     values2 = list(Est_pre.values())
@@ -62,3 +66,20 @@ def pH_adjustment(
                         DUncertainties_pre
                     )
                     LIR_data = fetch_data(["TA"], Path)
+                    AAdata, Elsedata = input_AAinds(C, code)
+                    Gdf, CsDesired = coefs_AAinds(eq, LIR_data)
+                    aaLCs, aaInterpolants_pre, elLCs, elInterpolants_pre = interpolate(
+                        Gdf,
+                        AAdata,
+                        Elsedata
+                    )
+                    alkest, _ = organize_data(
+                        aaLCs,
+                        elLCs,
+                        aaInterpolants_pre,
+                        elInterpolants_pre,
+                        Gdf,
+                        AAdata,
+                        Elsedata
+                    )
+                    print(alkest)

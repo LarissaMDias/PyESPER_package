@@ -82,4 +82,57 @@ def pH_adjustment(
                         AAdata,
                         Elsedata
                     )
-                    print(alkest)
+                    EstAlk = np.array(alkest["TA16"])
+                    EstSi = EstP = [0] * len(EstAlk)
+                    Pressure = sw.pres(OutputCoordinates["depth"], OutputCoordinates["latitude"])
+                    Est = np.array(values)
+                    
+                    # CO2SYS calculations
+                    kwargCO2 = {
+                        "par1":EstAlk, 
+                        "par2":Est, 
+                        "par1_type":1, 
+                        "par2_type":3, 
+                        "salinity":salinity, 
+                        "temperature":PredictorMeasurements["temperature"], 
+                        "temperature_out":PredictorMeasurements["temperature"], 
+                        "pressure":Pressure, 
+                        "pressure_out":Pressure, 
+                        "total_silicate":EstSi, 
+                        "total_phosphate":EstP, 
+                        "opt_total_borate":2}
+                    Out = pyco2.sys(**kwargCO2)
+                    DICadj = Out["dic"] + Cant - Cant2002
+                    kwargCO2_2 = {
+                        "par1":EstAlk,
+                        "par2":DICadj,
+                        "par1_type":1,
+                        "par2_type":2,
+                        "salinity":salinity,
+                        "temperature":PredictorMeasurements["temperature"],
+                        "temperature_out":PredictorMeasurements["temperature"],
+                        "pressure":Pressure,
+                        "pressure_out":Pressure,
+                        "total_silicate":EstSi,
+                        "total_phosphate":EstP,
+                        "opt_total_borate":2}
+                    OutAdj = pyco2.sys(**kwargCO2_2)
+                    pHadj = OutAdj["pH"]
+
+                    # Check for convergence warnings
+                    if np.isnan(pHadj).any():
+                        warning_message = (
+                            "Warning: CO2SYS took >20 iterations to converge. The corresponding estimate(s) will be NaN. "
+                            "This typically happens when ESPER_LIR is poorly suited for estimating water with the given properties "
+                            "(e.g., very high or low salinity or estimates in marginal seas)."
+                        )
+                        warning.append(warning_message)
+                    else:
+                        pHadj = np.array(values)
+                    Cant_adjusted[combo] = pHadj.tolist()
+               
+                # Print warnings if any
+                if warning:
+                    print(warning[0])
+
+    return Cant_adjusted

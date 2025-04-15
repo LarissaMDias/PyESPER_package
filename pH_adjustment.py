@@ -33,6 +33,7 @@ def pH_adjustment(
 
     combos2 = list(Est_pre.keys())
     values2 = list(Est_pre.values())
+    YouHaveBeenWarnedCanth = False
 
     if "EstDates" in kwargs and ("DIC" in DesiredVariables or "pH" in DesiredVariables):      
         if "pH" in DesiredVariables:
@@ -134,5 +135,10 @@ def pH_adjustment(
                 # Print warnings if any
                 if warning:
                     print(warning[0])
+
+    elif "EstDates" not in kwargs and ("DIC" or "pH" in DesiredVariables) and VerboseTF == True and YouHaveBeenWarnedCanth == False:
+        print("Warning: DIC or pH is a requested output but the user did not provide dates for the desired esimtates. The estimates "
+            "will be specific to 2002.0 unless the optional EstDates input is provided (recommended).")
+        YouHaveBeenWarnedCanth = True
 
     return Cant_adjusted

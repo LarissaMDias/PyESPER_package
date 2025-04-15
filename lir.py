@@ -20,6 +20,7 @@ def lir(DesiredVariables, Path, OutputCoordinates={}, PredictorMeasurements={}, 
     from emlr_estimate import emlr_estimate
     from adjust_pH_DIC import adjust_pH_DIC
     from pH_adjustment import pH_adjustment
+    from pH_adjcalc import pH_adjcalc
 
     # Starting the timer
     tic = time.perf_counter() 
@@ -123,6 +124,13 @@ def lir(DesiredVariables, Path, OutputCoordinates={}, PredictorMeasurements={}, 
         C,
         Uncertainties_pre,
         DUncertainties_pre,
+        **kwargs)
+
+    pH_adjcalc(
+        DesiredVariables,
+        VerboseTF,
+        Estimate,
+        Cant_adjusted,
         **kwargs)
 
      # Stopping the timer

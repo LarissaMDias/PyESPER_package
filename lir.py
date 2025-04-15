@@ -17,7 +17,7 @@ def lir(DesiredVariables, Path, OutputCoordinates={}, PredictorMeasurements={}, 
     from coefs_AAinds import coefs_AAinds
     from interpolate import interpolate
     from organize_data import organize_data
-    from EMLR_Estimate import EMLR_Estimate
+    from emlr_estimate import emlr_estimate
     from adjust_pH_DIC import adjust_pH_DIC
 
     # Starting the timer
@@ -89,7 +89,7 @@ def lir(DesiredVariables, Path, OutputCoordinates={}, PredictorMeasurements={}, 
         Elsedata
     )
 
-    EMLR = EMLR_Estimate(
+    EMLR = emlr_estimate(
         Equations, 
         DesiredVariables, 
         Path,

@@ -1,4 +1,4 @@
-def EMLR_Estimate(Equations, DesiredVariables, Path, OutputCoordinates={}, PredictorMeasurements={}, UDict={}, DUDict={}, Coefficients={}, **kwargs):
+def emlr_estimate(Equations, DesiredVariables, Path, OutputCoordinates={}, PredictorMeasurements={}, UDict={}, DUDict={}, Coefficients={}, **kwargs):
     
     """
     Uncertainty estimation step 1

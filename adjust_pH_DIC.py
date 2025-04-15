@@ -6,7 +6,7 @@ def adjust_pH_DIC(DesiredVariables, VerboseTF, Dates, Est_pre={}, PredictorMeasu
 
     import numpy as np
     import math    
-    from SimpleCantEstimateLR import SimpleCantEstimateLR
+    from simplecantestimatelr import simplecantestimatelr
     
     YouHaveBeenWarnedCanth = False
 
@@ -21,7 +21,7 @@ def adjust_pH_DIC(DesiredVariables, VerboseTF, Dates, Est_pre={}, PredictorMeasu
             longitude = np.mod(OutputCoordinates["longitude"], 360)
             latitude = np.array(OutputCoordinates["latitude"])
             depth = np.array(OutputCoordinates["depth"])
-            Cant, Cant2002 = SimpleCantEstimateLR(Dates, longitude, latitude, depth)
+            Cant, Cant2002 = simplecantestimatelr(Dates, longitude, latitude, depth)
             YouHaveBeenWarnedCanth = True
        
         for combo, a in zip(combos2, values2):

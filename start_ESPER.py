@@ -1,12 +1,12 @@
 """
-Accessory file for example runs. Downloads GLODAP file for test runs.
+Accessory file for example runs. 
 """
  
 import numpy as np
 from scipy.io import loadmat
 from lir import lir
 
-data = loadmat("GLODAPv2.2022_Merged_Master_File.mat") 
+data = loadmat("data/GLODAPv2.2022_Merged_Master_File.mat") 
 
 latitude_array = np.squeeze(data['G2latitude'][500:1000])
 latitude = latitude_array.tolist()
@@ -47,7 +47,7 @@ MeasUncerts = {'sal_u': [0.001], 'temp_u': [0.3], 'phosphate_u': [0.14], 'nitrat
 EstDates_array = np.squeeze(data['G2year'][500:1000])
 EstDates = EstDates_array.tolist()
 
-Path = '/Users/larissadias/Documents/Python/PyESPER'
+Path = '/Users/lara/Documents/Python/PyESPER'
              
 lir(['DIC'], Path, OutputCoordinates, PredictorMeasurements, EstDates=EstDates, Equations=[1])
 

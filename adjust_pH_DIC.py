@@ -34,6 +34,10 @@ def adjust_pH_DIC(DesiredVariables, VerboseTF, Dates, Est_pre={}, PredictorMeasu
    
              
         for combo, a in zip(combos2, values2):
+            
+            a2 = np.array(a)
+            a2 = np.transpose(a2)
+           
             dic = []
             if combo.startswith("DIC"):
 
@@ -43,11 +47,11 @@ def adjust_pH_DIC(DesiredVariables, VerboseTF, Dates, Est_pre={}, PredictorMeasu
                     else:
                         dic.append(vala + Canta - Cant2002a)
             else:
-                dic = list(a)
-            Cant_adjusted[combo] = dic
-    
+                dic = a2
+        for i in range(0, len(dic)):
+            Cant_adjusted[combos2[i]] = dic[i]
     else:
         Cant = [0] * len(Dates)
         Cant2002 = [0] * len(Dates)
-    print(Cant, Cant2002)
+   
     return Cant_adjusted, Cant, Cant2002

@@ -21,6 +21,7 @@ def lir(DesiredVariables, Path, OutputCoordinates={}, PredictorMeasurements={}, 
     from adjust_pH_DIC import adjust_pH_DIC
     from pH_adjustment import pH_adjustment
     from pH_adjcalc import pH_adjcalc
+    from final_formatting import final_formatting
 
     # Starting the timer
     tic = time.perf_counter() 
@@ -126,16 +127,18 @@ def lir(DesiredVariables, Path, OutputCoordinates={}, PredictorMeasurements={}, 
         DUncertainties_pre,
         **kwargs)
 
-    pH_adjcalc(
+    Cant_adjusted, combos2, values2 = pH_adjcalc(
         DesiredVariables,
         VerboseTF,
         Estimate,
         Cant_adjusted,
         **kwargs)
 
+    Estimates = final_formatting(Cant_adjusted, Estimate)
+
      # Stopping the timer
     toc = time.perf_counter()
     print(f"PyESPER_LIR took {toc - tic:0.4f} seconds, or {(toc-tic)/60:0.4f} minutes to run")    
 
     # DEBUG 
-#    print(Cant2002)
+    print(Estimates)

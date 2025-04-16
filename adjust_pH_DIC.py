@@ -14,6 +14,8 @@ def adjust_pH_DIC(DesiredVariables, VerboseTF, Dates, Est_pre={}, PredictorMeasu
     combos2 = list(Est_pre.keys())
     values2 = list(Est_pre.values())
     values2 = np.array(values2).T
+    Cant = []
+    Cant2002 = []
     if "EstDates" in kwargs and ("DIC" in DesiredVariables or "pH" in DesiredVariables):      
         if not YouHaveBeenWarnedCanth:
             if VerboseTF:
@@ -21,9 +23,16 @@ def adjust_pH_DIC(DesiredVariables, VerboseTF, Dates, Est_pre={}, PredictorMeasu
             longitude = np.mod(OutputCoordinates["longitude"], 360)
             latitude = np.array(OutputCoordinates["latitude"])
             depth = np.array(OutputCoordinates["depth"])
-            Cant, Cant2002 = simplecantestimatelr(Dates, longitude, latitude, depth)
+            Canta, Cant2002a = simplecantestimatelr(Dates, longitude, latitude, depth)
+            Canta = np.array(Canta)
+            Cant2002a = np.array(Cant2002a)  
             YouHaveBeenWarnedCanth = True
-       
+            for element in Canta:
+                Cant.append(element)
+            for element2002 in Cant2002a:
+                Cant2002.append(element2002)
+   
+             
         for combo, a in zip(combos2, values2):
             dic = []
             if combo.startswith("DIC"):
@@ -36,5 +45,9 @@ def adjust_pH_DIC(DesiredVariables, VerboseTF, Dates, Est_pre={}, PredictorMeasu
             else:
                 dic = list(a)
             Cant_adjusted[combo] = dic
-
+    
+    else:
+        Cant = [0] * len(Dates)
+        Cant2002 = [0] * len(Dates)
+    print(Cant, Cant2002)
     return Cant_adjusted, Cant, Cant2002

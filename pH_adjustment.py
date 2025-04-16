@@ -35,7 +35,6 @@ def pH_adjustment(
     values2 = list(Est_pre.values())
     YouHaveBeenWarnedCanth = False
     
-    print(Cant_adjusted)
     if "EstDates" in kwargs and ("DIC" in DesiredVariables or "pH" in DesiredVariables):      
         if "pH" in DesiredVariables:
             print("pH is detected")

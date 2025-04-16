@@ -13,8 +13,7 @@ def final_formatting(Cant_adjusted={}, Est_pre={}):
     combos3 = list(Cant_adjusted.keys())
     values3 = list(Cant_adjusted.values())
     values2 = np.array(values2[0])
-    values3 = np.array(values3[0])
-    print(values2, values3)    
+    values3 = np.array(values3[0])     
     Estimates={}
         
     return Estimates

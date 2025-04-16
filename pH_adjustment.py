@@ -34,7 +34,8 @@ def pH_adjustment(
     combos2 = list(Est_pre.keys())
     values2 = list(Est_pre.values())
     YouHaveBeenWarnedCanth = False
-
+    
+    print(Cant_adjusted)
     if "EstDates" in kwargs and ("DIC" in DesiredVariables or "pH" in DesiredVariables):      
         if "pH" in DesiredVariables:
             print("pH is detected")
@@ -84,10 +85,15 @@ def pH_adjustment(
                         Elsedata
                     )
                     EstAlk = np.array(alkest["TA16"])
+                    EstAlk = np.transpose(EstAlk)
+                    EstAlk = EstAlk[0]
                     EstSi = EstP = [0] * len(EstAlk)
                     Pressure = sw.pres(OutputCoordinates["depth"], OutputCoordinates["latitude"])
                     Est = np.array(values)
-                    
+                    Est = np.transpose(Est)
+                    Est = Est[0] 
+                    temperature = np.array(PredictorMeasurements["temperature"])
+                        
                     # CO2SYS calculations
                     kwargCO2 = {
                         "par1":EstAlk, 
@@ -95,8 +101,8 @@ def pH_adjustment(
                         "par1_type":1, 
                         "par2_type":3, 
                         "salinity":salinity, 
-                        "temperature":PredictorMeasurements["temperature"], 
-                        "temperature_out":PredictorMeasurements["temperature"], 
+                        "temperature":temperature, 
+                        "temperature_out":temperature, 
                         "pressure":Pressure, 
                         "pressure_out":Pressure, 
                         "total_silicate":EstSi, 
@@ -104,14 +110,15 @@ def pH_adjustment(
                         "opt_total_borate":2}
                     Out = pyco2.sys(**kwargCO2)
                     DICadj = Out["dic"] + Cant - Cant2002
+                   
                     kwargCO2_2 = {
                         "par1":EstAlk,
                         "par2":DICadj,
                         "par1_type":1,
                         "par2_type":2,
                         "salinity":salinity,
-                        "temperature":PredictorMeasurements["temperature"],
-                        "temperature_out":PredictorMeasurements["temperature"],
+                        "temperature":temperature,
+                        "temperature_out":temperature,
                         "pressure":Pressure,
                         "pressure_out":Pressure,
                         "total_silicate":EstSi,
@@ -119,7 +126,7 @@ def pH_adjustment(
                         "opt_total_borate":2}
                     OutAdj = pyco2.sys(**kwargCO2_2)
                     pHadj = OutAdj["pH"]
-
+                                       
                     # Check for convergence warnings
                     if np.isnan(pHadj).any():
                         warning_message = (
@@ -128,10 +135,9 @@ def pH_adjustment(
                             "(e.g., very high or low salinity or estimates in marginal seas)."
                         )
                         warning.append(warning_message)
-                    else:
-                        pHadj = np.array(values)
+                    
                     Cant_adjusted[combo] = pHadj.tolist()
-               
+                               
                 # Print warnings if any
                 if warning:
                     print(warning[0])

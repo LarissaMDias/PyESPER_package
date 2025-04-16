@@ -141,4 +141,4 @@ def lir(DesiredVariables, Path, OutputCoordinates={}, PredictorMeasurements={}, 
     print(f"PyESPER_LIR took {toc - tic:0.4f} seconds, or {(toc-tic)/60:0.4f} minutes to run")    
 
     # DEBUG 
-    print(Estimates)
+#    print(Estimates)

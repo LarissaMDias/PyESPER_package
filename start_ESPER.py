@@ -49,5 +49,5 @@ EstDates = EstDates_array.tolist()
 
 Path = '/Users/lara/Documents/Python/PyESPER'
              
-lir(['pH'], Path, OutputCoordinates, PredictorMeasurements, EstDates=EstDates, Equations=[1])
+lir(['TA', 'pH'], Path, OutputCoordinates, PredictorMeasurements, EstDates=EstDates, Equations=[1])
 

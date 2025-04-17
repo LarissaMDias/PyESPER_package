@@ -134,11 +134,10 @@ def lir(DesiredVariables, Path, OutputCoordinates={}, PredictorMeasurements={}, 
         Cant_adjusted,
         **kwargs)
 
-    Estimates = final_formatting(Cant_adjusted, Estimate)
-
+    Estimates = final_formatting(DesiredVariables, Cant_adjusted, Estimate)
+   
      # Stopping the timer
     toc = time.perf_counter()
     print(f"PyESPER_LIR took {toc - tic:0.4f} seconds, or {(toc-tic)/60:0.4f} minutes to run")    
 
-    # DEBUG 
-    print(Estimates)
+    return Estimates, CoefficientsUsed, EMLR

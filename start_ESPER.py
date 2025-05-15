@@ -50,12 +50,12 @@ EstDates = EstDates_array.tolist()
 Path = '/Users/lara/Documents/Python/PyESPER'
              
 Estimates, Coefficients, Uncertainties = lir(
-    ['TA'], 
+    ['DIC','pH'], 
     Path, 
     OutputCoordinates, 
     PredictorMeasurements, 
     EstDates=EstDates, 
-    Equations=[1])
+    Equations=[5,10])
 
 # DEBUG
-print(Estimates)
+print(Estimates, Coefficients, Uncertainties)
